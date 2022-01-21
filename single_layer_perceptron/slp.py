@@ -78,8 +78,21 @@ class SingleLayerPerceptron:
             epoch += 1
 
 
-    def predict(self):
-        pass
+    def predict(self, input_values: list):
+        '''Make prediction based on the inputs. Prediction is either 1 or -1.'''
+        if len(input_values) != len(self.model['weights']):
+            print('Inputs given are not sufficient.')
+            print(f"Expected number of inputs: {len(self.model['weights'])}")
+            print(f"Given number of inputs: {len(input_values)}")
+            return 'no predictions'
+        
+        ynet = self.model['bias']
+        for i in range(len(input_values)):
+            ynet += input_values[i] * self.model['weights'][i]
+        
+        y = self.find_y(ynet)
+
+        return y
 
 
     def load_model(self, model_name: str = 'slp_model'):
