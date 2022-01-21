@@ -18,7 +18,8 @@ class HebbNet:
         self.weights = [0 for i in range(self.inputs)]
 
         self.model = {'name': 'Hebb Net model',
-                      'weights': self.weights}
+                      'weights': self.weights,
+                      'bias': self.bias}
 
     def train_model(self):
         if len(self.inputs) != self.combinations:
@@ -40,6 +41,22 @@ class HebbNet:
             
             self.bias_change = self.x0 * self.targets[i]
             self.bias += self.bias_change
+
+
+    def predict(self, input_values: list):
+        if len(input_values) != len(self.model['weights']):
+            print('Inputs given are not sufficient.')
+            print(f"Expected number of inputs: {len(self.model['weights'])}")
+            print(f"Given number of inputs: {len(input_values)}")
+        
+        ynet = self.model['bias']
+        for i in range(len(input_values)):
+            ynet += input_values[i] * self.model['weights'][i]
+        
+        if ynet > 0:
+            return 1
+        
+        return -1
 
 
     def load_model(self, model_name : str = 'hebb_model'):
