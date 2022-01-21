@@ -16,6 +16,7 @@ class HebbNet:
         self.combinations = len(self.targets)
 
         self.weights = [0 for i in range(self.inputs)]
+        self.bias = 0
 
         self.model = {'name': 'Hebb Net model',
                       'weights': self.weights,
