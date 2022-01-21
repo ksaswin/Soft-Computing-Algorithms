@@ -49,6 +49,7 @@ class HebbNet:
             print('Inputs given are not sufficient.')
             print(f"Expected number of inputs: {len(self.model['weights'])}")
             print(f"Given number of inputs: {len(input_values)}")
+            return 'no predictions'
         
         ynet = self.model['bias']
         for i in range(len(input_values)):
