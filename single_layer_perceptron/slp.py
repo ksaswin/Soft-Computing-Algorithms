@@ -1,3 +1,4 @@
+from audioop import bias
 import pickle
 import os
 
@@ -13,8 +14,68 @@ class SingleLayerPerceptron:
                      }
     
 
-    def train_model(self):
-        pass
+    def find_y(self, ynet: float):                                               # y = {1, 0, -1} if ynet {>0, =0, <0}
+        if not ynet:
+            return 0
+        
+        if ynet < 0:
+            return -1
+        
+        return 1
+
+
+    def train_model(self, input_array: list = [], targets: list = [], alpha: float = 1.0, max_epochs: int = 100):
+        '''Train the model with an input array, corresponding targets and learning rate.'''
+        is_nested = any(isinstance(sub, list) for sub in input_array)
+
+        inputs = len(input_array)
+        if is_nested:
+            inputs = len(input_array[0])
+
+        combinations = len(targets)
+        if len(input_array) != combinations:
+            print('Training not possible. Parameters donot match.')
+            print(f'Number of input combinations given: {len(self.inputs)}')
+            print(f'Number of targets given: {combinations}')
+            return
+        
+        for i in range(inputs):
+            self.weights.append(0)
+        
+        x0 = 1
+
+        weight_change = [0 for i in range(inputs)]
+        bias_change = 0
+
+        weight_change_flag = [1 for i in range(combinations)]
+        epoch = 1
+
+        while(not all(flag == 0 for flag in weight_change_flag)):
+            if epoch > max_epochs:
+                break
+
+            for i in range(combinations):
+
+                ynet = self.bias
+                for j in range(inputs):
+                    ynet += input_array[i][j] * self.weights[j]
+                
+                y = self.find_y(ynet)
+
+                if y != targets[i]:
+                    weight_change_flag[i] = 1
+                    for j in range(inputs):
+                        weight_change[j] = alpha * targets[i] * input_array[i][j]
+                        self.weights[j] += weight_change[j]
+                    
+                    bias_change = alpha * targets[i] * x0
+                    self.bias += bias_change
+                else:
+                    weight_change_flag[i] = 0
+
+                    weight_change = [0 for i in range(inputs)]
+                    bias_change = 0
+            epoch += 1
 
 
     def predict(self):
