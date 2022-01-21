@@ -23,7 +23,7 @@ class HebbNet:
                       'bias': self.bias}
 
     def train_model(self):
-        if len(self.inputs) != self.combinations:
+        if len(self.input_array) != self.combinations:
             print('Training not possible. Parameters donot match.')
             print(f'Number of input combinations given: {len(self.inputs)}')
             print(f'Number of targets given: {self.combinations}')
