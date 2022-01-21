@@ -4,6 +4,7 @@ import os
 class HebbNet:
     
     def __init__(self):
+        '''Creates a HebbNet model with empty weights and zero bias'''
         self.weights = []
         self.bias = 0
 
@@ -13,6 +14,7 @@ class HebbNet:
                      }
 
     def train_model(self, input_array: list = [], targets: list = []):
+        '''Train the model with an input array and corresponding targets.'''
         is_nested = any(isinstance(sub, list) for sub in input_array)
 
         inputs = len(input_array)
@@ -26,6 +28,7 @@ class HebbNet:
             print(f'Number of targets given: {combinations}')
             return
 
+        # Initialise all weights to 0
         for i in range(inputs):
             self.weights.append(0)
 
@@ -34,6 +37,7 @@ class HebbNet:
         weight_change = [0 for i in range(inputs)]
         bias_change = 0
 
+        # Update weights
         for i in range(combinations):
             for j in range(inputs):
                 weight_change[j] = input_array[i][j] * targets[i]
@@ -44,6 +48,7 @@ class HebbNet:
 
 
     def predict(self, input_values: list):
+        '''Make prediction based on the inputs. Prediction is either 1 or -1.'''
         if len(input_values) != len(self.model['weights']):
             print('Inputs given are not sufficient.')
             print(f"Expected number of inputs: {len(self.model['weights'])}")
@@ -61,13 +66,16 @@ class HebbNet:
 
 
     def load_model(self, model_name : str = 'hebb_model'):
+        '''Looks for a model named hebb_model by default. Specify model name for custom named models.'''
         if os.path.isfile(f'{model_name}.pkl'):
             self.model = pickle.load(open(f'{model_name}.pkl', 'rb'))
+            print('Saved model found.')        
         else:
             print(f'Sorry, a model named {model_name} doesnot exist.')
 
 
     def save_model(self, model_name: str = 'hebb_model'):
+        '''Saves the model as hebb_model. Specify model name for a custom model name.'''
         pickle.dump(self.model, open(f'{model_name}.pkl', 'wb'))
 
         print(f'The model was saved as a pickle file, {model_name}.pkl.')
