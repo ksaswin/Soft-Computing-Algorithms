@@ -3,45 +3,44 @@ import os
 
 class HebbNet:
     
-    def __init__(self, input_array: list = [], targets: list = []):
-        self.input_array = input_array
-        self.targets = targets
-
-        is_nested = any(isinstance(sub, list) for sub in self.input_array)
-
-        self.inputs = len(self.input_array)
-        if is_nested:
-            self.inputs = len(self.input_array[0])
-
-        self.combinations = len(self.targets)
-
-        self.weights = [0 for i in range(self.inputs)]
+    def __init__(self):
+        self.weights = []
         self.bias = 0
 
         self.model = {'name': 'Hebb Net model',
                       'weights': self.weights,
-                      'bias': self.bias}
+                      'bias': self.bias
+                     }
 
-    def train_model(self):
-        if len(self.input_array) != self.combinations:
+    def train_model(self, input_array: list = [], targets: list = []):
+        is_nested = any(isinstance(sub, list) for sub in input_array)
+
+        inputs = len(input_array)
+        if is_nested:
+            inputs = len(input_array[0])
+
+        combinations = len(targets)
+        if len(input_array) != combinations:
             print('Training not possible. Parameters donot match.')
             print(f'Number of input combinations given: {len(self.inputs)}')
-            print(f'Number of targets given: {self.combinations}')
+            print(f'Number of targets given: {combinations}')
             return
 
-        self.bias = 0
-        self.x0 = 1
+        for i in range(inputs):
+            self.weights.append(0)
 
-        self.weight_change = [0 for i in range(self.inputs)]
-        self.bias_change = 0
+        x0 = 1
 
-        for i in range(self.combinations):
-            for j in range(self.inputs):
-                self.weight_change[j] = self.input_array[i][j] * self.targets[i]
-                self.weights[j] += self.weight_change[j]
+        weight_change = [0 for i in range(inputs)]
+        bias_change = 0
+
+        for i in range(combinations):
+            for j in range(inputs):
+                weight_change[j] = input_array[i][j] * targets[i]
+                self.weights[j] += weight_change[j]
             
-            self.bias_change = self.x0 * self.targets[i]
-            self.bias += self.bias_change
+            bias_change = x0 * targets[i]
+            self.bias += bias_change
 
 
     def predict(self, input_values: list):
