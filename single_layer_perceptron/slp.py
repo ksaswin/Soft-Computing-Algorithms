@@ -92,9 +92,10 @@ class SingleLayerPerceptron:
         for i in range(len(input_values)):
             ynet += input_values[i] * self.model['weights'][i]
         
-        y = self.find_y(ynet)
-
-        return y
+        if ynet >= 0:
+            return 1
+        
+        return -1
 
 
     def load_model(self, model_name: str = 'slp_model'):
