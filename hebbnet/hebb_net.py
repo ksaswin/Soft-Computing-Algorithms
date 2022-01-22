@@ -59,7 +59,7 @@ class HebbNet:
         for i in range(len(input_values)):
             ynet += input_values[i] * self.model['weights'][i]
         
-        if ynet > 0:
+        if ynet >= 0:
             return 1
         
         return -1
