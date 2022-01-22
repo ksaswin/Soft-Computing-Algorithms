@@ -13,7 +13,8 @@ class SingleLayerPerceptron:
                      }
     
 
-    def find_y(self, ynet: float):                                               # y = {1, 0, -1} if ynet {>0, =0, <0}
+    # y = {1, 0, -1} if ynet {>0, =0, <0}
+    def find_y(self, ynet: float):
         if not ynet:
             return 0
         
@@ -49,7 +50,9 @@ class SingleLayerPerceptron:
         weight_change_flag = [1 for i in range(combinations)]
         epoch = 1
 
+        # Update weights and weight_change flags.
         while(not all(flag == 0 for flag in weight_change_flag)):
+            # Break loop if the number of iterations exceeds the maximum value.
             if epoch > max_epochs:
                 break
 
@@ -71,9 +74,9 @@ class SingleLayerPerceptron:
                     self.bias += bias_change
                 else:
                     weight_change_flag[i] = 0
-
                     weight_change = [0 for i in range(inputs)]
                     bias_change = 0
+
             epoch += 1
 
 
