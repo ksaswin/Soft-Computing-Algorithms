@@ -13,7 +13,7 @@ Implemented algorithms:
 Clone the repository using:
 
 ```bash
-  git clone 'link goes here'
+  git clone 'https://github.com/ksaswin/Soft-Computing-Algorithms.git'
 ```
 
 Move into the cloned repository:
@@ -35,7 +35,6 @@ Import the packages from different modules using:
 ```python
 from hebbnet.hebb_net import HebbNet
 from single_layer_perceptron.slp import SingleLayerPerceptron
-from multi_layer_perceptron.mlp import MultiLayerPerceptron
 ```
 
 Create the model for each algorithm using:
@@ -45,8 +44,10 @@ input_list = [[1, 1], [1, -1], [-1, 1], [-1, -1]]
 targets = [1, -1, -1, -1]
 
 hebb_model = HebbNet()
-slp_model = SingleLayerPerceptron(input_list, targets)
-mlp_model = MultiLayerPerceptron(input_list, targets)
+slp_model = SingleLayerPerceptron()
+
+hebb_model.train_model(input_list, targets)
+slp_model.train_model(input_list, targets, alpha=1, max_epochs=3)
 ```
 
-The example above creates the model for a two input AND gate.
+The example above creates the models for a two input AND gate.
