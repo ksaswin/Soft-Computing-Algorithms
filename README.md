@@ -13,7 +13,7 @@ Implemented algorithms:
 Clone the repository using:
 
 ```bash
-  git clone 'https://github.com/ksaswin/Soft-Computing-Algorithms.git'
+  git clone https://github.com/ksaswin/Soft-Computing-Algorithms.git
 ```
 
 Move into the cloned repository:
